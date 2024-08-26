@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>DevOps ToDo List</h1>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Box sx={{ bgcolor: '#cfe8fc' }}>
+          <h3>CONTAINER FOR ADD/EDIT TODOS</h3>
+        </Box>
+      </Container>
+
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Box sx={{ bgcolor: '#cfe8fc' }}>
+          <h3>CONTAINER FOR DISPLAY TODOS</h3>
+        </Box>
+      </Container>
     </div>
   );
 }
