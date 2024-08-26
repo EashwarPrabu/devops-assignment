@@ -10,20 +10,41 @@ function App() {
 
   const toDoRef = useRef();
   const [toDos, setToDos] = useState([
-    {key: 1, content: "Attend quiz"},
-    {key: 2, content: "Complete assignment"},
-  ])
+    {key: uuidv4(), content: "Attend quiz"},
+    {key: uuidv4(), content: "Complete assignment"},
+  ]);
+  const [editConfig, setEditConfig] = useState({
+    enabled: false,
+    key: null
+  });
 
   const saveToDo = () => {
     const enteredInput = toDoRef.current.value;
     if(enteredInput !== "") {
-      const newToDo = {
-        key: uuidv4(),
-        content: enteredInput,
+      if (!editConfig.enabled) {
+        const newToDo = {
+          key: uuidv4(),
+          content: enteredInput,
+        }
+        setToDos(existingToDo => [...existingToDo, newToDo]);
       }
-      setToDos(existingToDo => [...existingToDo, newToDo])
+      if (editConfig.enabled) {
+        setToDos((existingToDoList) => {
+          return existingToDoList.map(existingToDo =>
+            existingToDo.key === editConfig.key ? { ...existingToDo, content: enteredInput } : existingToDo
+          );
+        });
+        setEditConfig({ enabled: false, key: null })
+      }
     }
     toDoRef.current.value = "";
+  }
+
+  const editToDo = (key) => {
+    const existingToDo = toDos.find(toDo => toDo.key === key);
+    setEditConfig({ enabled: true, key: key });
+    toDoRef.current.focus();
+    toDoRef.current.value = existingToDo.content;
   }
 
   const deleteTodo = (key) => {
@@ -80,7 +101,7 @@ function App() {
               <Button
                 variant="contained"
                 color="success"
-                // onClick={() => editTodo(toDo.id)}
+                onClick={() => editToDo(toDo.key)}
                 style={{ marginRight: '0.5rem' }}
               >
                 Edit
